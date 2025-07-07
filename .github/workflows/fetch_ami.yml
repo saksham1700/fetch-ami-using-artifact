@@ -9,11 +9,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Fetch AMI
         id: fetch_ami
-        uses: ./.github/actions/fetch_ami
+        uses: ./.github/actions/fetch-ami
         with:
           flavor: x
 
@@ -26,11 +27,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Fetch AMI
         id: fetch_ami
-        uses: ./.github/actions/fetch_ami
+        uses: ./.github/actions/fetch-ami
         with:
           flavor: y
 
@@ -43,11 +45,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Fetch AMI
         id: fetch_ami
-        uses: ./.github/actions/fetch_ami
+        uses: ./.github/actions/fetch-ami
         with:
           flavor: z
 

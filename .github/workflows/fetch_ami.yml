@@ -1,8 +1,7 @@
 name: Fetch AMI
 
 on:
-  repository_dispatch:
-    types: [start-artifact-job]
+  workflow_dispatch:
 
 jobs:
   build-x:

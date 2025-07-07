@@ -1,8 +1,10 @@
 name: Fetch AMI
 
 on:
-  release:
-    types: [ "created" ]
+  repository_dispatch:
+    types: [ "start-artifact-job" ]
+  push:
+    branches: [ "main" ]
 
 jobs:
   build-x:

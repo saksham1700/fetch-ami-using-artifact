@@ -55,3 +55,9 @@ runs:
         echo "AMI ID from ${{ inputs.flavor }}_ami-ids.json:"
         jq -r '.["us-west-2"]' extracted/${{ inputs.flavor }}_ami-ids.json
         echo "ami_id=$(jq -r '.["us-west-2"]' extracted/${{ inputs.flavor }}_ami-ids.json)" >> $GITHUB_OUTPUT
+
+    - name: Upload AMI IDs artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.flavor }}_ami-ids
+        path: extracted/${{ inputs.flavor }}_ami-ids.json

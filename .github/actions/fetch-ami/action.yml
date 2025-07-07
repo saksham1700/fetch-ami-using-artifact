@@ -5,6 +5,9 @@ inputs:
   flavor:
     description: 'The flavor of the AMI to fetch.'
     required: true
+  repo_pat:
+    description: 'GitHub Personal Access Token with repo scope'
+    required: true
 
 outputs:
   ami_id:
@@ -18,7 +21,7 @@ runs:
       shell: bash
       id: get_run
       run: |
-        response=$(curl -s -H "Authorization: token ${{ secrets.REPO_PAT }}" \
+        response=$(curl -s -H "Authorization: token ${{ inputs.repo_pat }}" \
           "https://api.github.com/repos/skmahto101210/test_artifacts/actions/runs?status=success&per_page=1")
         
         run_id=$(echo "$response" | jq -r '.workflow_runs[0].id')
@@ -28,7 +31,7 @@ runs:
       shell: bash
       id: get_artifact
       run: |
-        curl -s -H "Authorization: token ${{ secrets.REPO_PAT }}" \
+        curl -s -H "Authorization: token ${{ inputs.repo_pat }}" \
           "https://api.github.com/repos/skmahto101210/test_artifacts/actions/runs/${{ steps.get_run.outputs.run_id }}/artifacts" > artifacts.json
 
         artifact_id=$(jq '.artifacts[] | select(.name=="${{ inputs.flavor }}_ami-ids") | .id' artifacts.json)
@@ -39,7 +42,7 @@ runs:
       run: |
         mkdir -p extracted
 
-        curl -L -H "Authorization: token ${{ secrets.REPO_PAT }}" \
+        curl -L -H "Authorization: token ${{ inputs.repo_pat }}" \
           -o ${{ inputs.flavor }}_ami-ids.zip \
           "https://api.github.com/repos/skmahto101210/test_artifacts/actions/artifacts/${{ steps.get_artifact.outputs.artifact_id }}/zip"
 
@@ -50,5 +53,5 @@ runs:
       shell: bash
       run: |
         echo "AMI ID from ${{ inputs.flavor }}_ami-ids.json:"
-        jq -r '.["us-wast-2"]' extracted/${{ inputs.flavor }}_ami-ids.json
-        echo "ami_id=$(jq -r '.["us-wast-2"]' extracted/${{ inputs.flavor }}_ami-ids.json)" >> $GITHUB_OUTPUT
+        jq -r '.["us-west-2"]' extracted/${{ inputs.flavor }}_ami-ids.json
+        echo "ami_id=$(jq -r '.["us-west-2"]' extracted/${{ inputs.flavor }}_ami-ids.json)" >> $GITHUB_OUTPUT

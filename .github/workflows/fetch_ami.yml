@@ -17,6 +17,7 @@ jobs:
         uses: ./.github/actions/fetch-ami
         with:
           flavor: x
+          repo_pat: ${{ secrets.REPO_PAT }}
 
       - name: Output AMI ID
         shell: bash
@@ -35,6 +36,7 @@ jobs:
         uses: ./.github/actions/fetch-ami
         with:
           flavor: y
+          repo_pat: ${{ secrets.REPO_PAT }}
 
       - name: Output AMI ID
         shell: bash
@@ -53,6 +55,7 @@ jobs:
         uses: ./.github/actions/fetch-ami
         with:
           flavor: z
+          repo_pat: ${{ secrets.REPO_PAT }}
 
       - name: Output AMI ID
         shell: bash
